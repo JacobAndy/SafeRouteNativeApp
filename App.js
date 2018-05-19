@@ -1,27 +1,13 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { createRootNavigator } from "./routes";
-import { Provider } from "redux";
-import store from "./store";
-import SignIn from "./src/components/SignIn/SignIn";
+import React, { Component } from "react";
+import { Card, FormLabel, FormInput, Button } from "react-native-elements";
+import { View } from "react-native";
+import RootNavigator, { SignedOut } from "./routes";
+import { connect } from "react-redux";
 
-class App extends React.Component {
-  componentDidMount() {}
+class App extends Component {
+  state = {};
   render() {
-    //this is telling me whether or not we have checked.
-    //initially will be false
-    // if (!checkedSignedIn) {
-    //   return null;
-    // }
-
-    //this will be either true or false
-    //initially will be false
-    const Layout = createRootNavigator((SignIn = false));
-    return (
-      <Provider store={store}>
-        <Layout />
-      </Provider>
-    );
+    return <SignedOut />;
   }
 }
 export default App;

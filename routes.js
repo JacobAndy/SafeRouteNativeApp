@@ -1,40 +1,41 @@
 import React from "react";
 import { Platform, StatusBar } from "react-native";
+import { connect } from "react-redux";
 import {
-  StackNavigator,
-  TabNavigator,
-  SwitchNavigator
+  createStackNavigator,
+  createBottomTabNavigator,
+  createSwitchNavigator
 } from "react-navigation";
 
-import Profile from "./src/components/Profile/Profile";
-import Social from "./src/components/Social/Social";
-import Alert from "./src/components/Alert/Alert";
-import SignUp from "./src/components/SignUp/SignUp";
-import SignIn from "./src/components/SignIn/SignIn";
-import { connect } from "react-redux";
+import SignUp from "./src/SignUp/SignUp";
+import SignIn from "./src/SignIn/SignIn";
+
+import Profile from "./src/Profile/Profile";
+import Social from "./src/Social/Social";
+import Alert from "./src/Alert/Alert";
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
 };
 
-export const SignedOut = StackNavigator({
-  SignUp: {
-    screen: SignUp,
-    navigationOptions: {
-      title: "Sign Up",
-      headerStyle
-    }
-  },
+export const SignedOut = createStackNavigator({
   SignIn: {
     screen: SignIn,
     navigationOptions: {
       title: "Sign In",
       headerStyle
     }
+  },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: {
+      title: "Sign Up",
+      headerStyle
+    }
   }
 });
 
-export const SingedIn = TabNavigator(
+export const SignedIn = createBottomTabNavigator(
   {
     Profile: {
       screen: Profile,
@@ -67,8 +68,8 @@ export const SingedIn = TabNavigator(
   }
 );
 
-export const createRootNavigator = (initialSignedIn = false) => {
-  return SwitchNavigator(
+const RootNavigator = () => {
+  return createSwitchNavigator(
     {
       SignedIn: {
         screen: SignedIn
@@ -79,7 +80,13 @@ export const createRootNavigator = (initialSignedIn = false) => {
     },
     {
       //if user is signed in the initial Route will be SignedIn, otherwise the initial route is SignedOut
-      initialRouteName: initialSignedIn ? "SignedIn" : "SignedOut"
+      initialRouteName: this.props.userReducer.signedIn
+        ? "SignedIn"
+        : "SignedOut"
     }
   );
 };
+console.log(this.props);
+
+// let mapStateToProps = state => state;
+// export default connect(mapStateToProps, {})(RootNavigator);
