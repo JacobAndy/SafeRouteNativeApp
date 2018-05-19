@@ -14,6 +14,8 @@ import Profile from "./src/Profile/Profile";
 import Social from "./src/Social/Social";
 import Alert from "./src/Alert/Alert";
 
+console.log(this.props);
+
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
 };
@@ -68,7 +70,7 @@ export const SignedIn = createBottomTabNavigator(
   }
 );
 
-const RootNavigator = () => {
+export const createRootNavigator = (signedIn = false) => {
   return createSwitchNavigator(
     {
       SignedIn: {
@@ -80,13 +82,7 @@ const RootNavigator = () => {
     },
     {
       //if user is signed in the initial Route will be SignedIn, otherwise the initial route is SignedOut
-      initialRouteName: this.props.userReducer.signedIn
-        ? "SignedIn"
-        : "SignedOut"
+      initialRouteName: signedIn ? "SignedIn" : "SignedOut"
     }
   );
 };
-console.log(this.props);
-
-// let mapStateToProps = state => state;
-// export default connect(mapStateToProps, {})(RootNavigator);

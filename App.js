@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Card, FormLabel, FormInput, Button } from "react-native-elements";
 import { View } from "react-native";
-import RootNavigator, { SignedOut } from "./routes";
+import { createRootNavigator, SignedOut } from "./routes";
 import { connect } from "react-redux";
 
 class App extends Component {
-  state = {};
+  state = {
+    signedIn: false
+  };
   render() {
-    return <SignedOut />;
+    let { signedIn } = this.state;
+    let Layout = createRootNavigator(signedIn);
+    return <Layout />;
   }
 }
 export default App;
