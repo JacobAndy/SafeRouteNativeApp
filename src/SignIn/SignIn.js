@@ -1,10 +1,22 @@
 import React, { Component } from "react";
-import { Card, FormLabel, FormInput, Button } from "react-native-elements";
+import {
+  Card,
+  FormLabel,
+  FormInput,
+  Button,
+  FormValidationMessage
+} from "react-native-elements";
 import { View } from "react-native";
+import { connect } from "react-redux";
 
 class SignIn extends Component {
-  state = {};
+  state = {
+    userNameError: false,
+    passwordError: false
+  };
+  handleSignIn = () => {};
   render() {
+    console.log(this.props);
     return (
       <View
         style={{
@@ -14,10 +26,37 @@ class SignIn extends Component {
         }}
       >
         <Card title="Sign In">
-          <FormLabel>User Name</FormLabel>
-          <FormInput placeholder="User Name..." />
-          <FormLabel>Password</FormLabel>
-          <FormInput placeholder="Password..." />
+          <FormLabel
+            labelStyle={this.state.userNameError ? { color: "red" } : null}
+          >
+            User Name
+          </FormLabel>
+          <FormInput
+            // clearTextOnFocus={true}
+            onChangeText={text => {
+              console.log(text);
+            }}
+            placeholder="User Name..."
+            shake={this.state.userNameError}
+            containerStyle={
+              this.state.userNameError ? { borderBottomColor: "red" } : null
+            }
+          />
+          <FormLabel
+            labelStyle={this.state.passwordError ? { color: "red" } : null}
+          >
+            Password
+          </FormLabel>
+          <FormInput
+            onChangeText={text => {
+              console.log(text);
+            }}
+            placeholder="Password..."
+            shake={this.state.passwordError}
+            containerStyle={
+              this.state.passwordError ? { borderBottomColor: "red" } : null
+            }
+          />
           <View
             style={{
               marginTop: 18,
@@ -41,4 +80,5 @@ class SignIn extends Component {
     );
   }
 }
-export default SignIn;
+let mapStateToProps = state => state;
+export default connect(mapStateToProps)(SignIn);
