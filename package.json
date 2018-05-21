@@ -19,8 +19,14 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@material-ui/icons": "^1.0.0",
+    "axios": "^0.18.0",
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
     "expo": "^27.0.1",
+    "express": "^4.16.3",
+    "massive": "^4.8.2",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-elements": "^0.19.1",

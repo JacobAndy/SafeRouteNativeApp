@@ -7,12 +7,12 @@ import {
   createSwitchNavigator
 } from "react-navigation";
 
-import SignUp from "./src/SignUp/SignUp";
-import SignIn from "./src/SignIn/SignIn";
+import SignUp from "./src/components/SignUp/SignUp";
+import SignIn from "./src/components/SignIn/SignIn";
 
-import Profile from "./src/Profile/Profile";
-import Social from "./src/Social/Social";
-import Alert from "./src/Alert/Alert";
+import Profile from "./src/components/Profile/Profile";
+import Social from "./src/components/Social/Social";
+import Alert from "./src/components/Alert/Alert";
 
 console.log(this.props);
 

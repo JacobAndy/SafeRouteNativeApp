@@ -8,12 +8,12 @@ import {
 } from "react-native-elements";
 import { View, Text } from "react-native";
 import { connect } from "react-redux";
+import { userSignIn } from "../../Ducks/userReducer";
 
 const userNameRegex = new RegExp("^[a-zA-Z0-9_-]{3,15}$");
 
-const passwordRegex = new RegExp(
-  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-);
+const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+// ("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
 
 class SignIn extends Component {
   state = {
@@ -23,17 +23,30 @@ class SignIn extends Component {
     passwordError: false
   };
   handleSignIn = () => {
+    console.log("tried signing in");
+    let error = false;
     let { userName, password } = this.state;
     if (!userName || userName.match(userNameRegex) === null) {
       this.setState({ userNameError: true });
+      error = true;
     } else {
       this.setState({ userNameError: false });
+      error = false;
     }
     if (!password || password.match(passwordRegex) === null) {
       this.setState({ passwordError: true });
+      error = true;
+      if (error) {
+        return null;
+      }
     } else {
       this.setState({ passwordError: false });
+      if (error) {
+        return null;
+      }
     }
+    this.props.userSignIn(userName, password);
+    console.log("everything looks good!");
   };
   handleTransition = () => {
     this.setState({
@@ -45,7 +58,7 @@ class SignIn extends Component {
     this.props.navigation.navigate("SignUp");
   };
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <View
         style={{
@@ -130,4 +143,6 @@ class SignIn extends Component {
   }
 }
 let mapStateToProps = state => state;
-export default connect(mapStateToProps)(SignIn);
+export default connect(mapStateToProps, { userSignIn })(SignIn);
+
+// aA!12345678

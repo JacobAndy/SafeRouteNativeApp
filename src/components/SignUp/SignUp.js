@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Card, FormLabel, FormInput, Button } from "react-native-elements";
 import { View, AlertIOS } from "react-native";
+import { connect } from "react-redux";
+import { createUser } from "../../Ducks/userReducer";
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const userNameRegex = new RegExp("^[a-zA-Z0-9_-]{3,15}$");
 
-const passwordRegex = new RegExp(
-  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-);
+const passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+// "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
 
 class SignUp extends Component {
   state = {
@@ -101,7 +102,14 @@ class SignUp extends Component {
         return null;
       }
     }
-    console.log("everything looks good!");
+    this.props.createUser(
+      userName,
+      email,
+      firstName,
+      lastName,
+      phoneNumber,
+      password
+    );
     AlertIOS.alert("Account Created!", "Click Here To Go Back!", [
       { text: "OK", onPress: () => this.props.navigation.goBack() }
     ]);
@@ -254,4 +262,5 @@ class SignUp extends Component {
     );
   }
 }
-export default SignUp;
+let mapStateToProps = state => state;
+export default connect(mapStateToProps, { createUser })(SignUp);
