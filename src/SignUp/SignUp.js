@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { Card, FormLabel, FormInput, Button } from "react-native-elements";
-import { View } from "react-native";
+import { View, AlertIOS } from "react-native";
+
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const userNameRegex = new RegExp("^[a-zA-Z0-9_-]{3,15}$");
+
+const passwordRegex = new RegExp(
+  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+);
 
 class SignUp extends Component {
   state = {
@@ -10,9 +18,94 @@ class SignUp extends Component {
     emailError: false,
     phoneNumberError: false,
     passwordError: false,
-    passwordConfirmError: false
+    passwordConfirmError: false,
+    userName: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    password: "",
+    passwordConfirm: ""
   };
-  handleSignUp = () => {};
+  handleSignUp = () => {
+    let {
+      userNameError,
+      firstNameError,
+      lastNameError,
+      emailError,
+      phoneNumberError,
+      passwordError,
+      passwordConfirmError,
+      userName,
+      email,
+      firstName,
+      lastName,
+      phoneNumber,
+      password,
+      passwordConfirm
+    } = this.state;
+    let error = false;
+    if (!userName || userName.match(userNameRegex) === null) {
+      this.setState({ userNameError: true });
+      error = true;
+    } else {
+      this.setState({ userNameError: false });
+    }
+    if (!email || email.match(emailRegex) === null) {
+      this.setState({ emailError: true });
+      error = true;
+    } else {
+      this.setState({ emailError: false });
+    }
+    if (!firstName || firstName.match(/^[a-zA-Z]+$/) === null) {
+      this.setState({ firstNameError: true });
+      error = true;
+    } else {
+      this.setState({ firstNameError: false });
+    }
+    if (!lastName || lastName.match(/^[a-zA-Z]+$/) === null) {
+      this.setState({ lastNameError: true });
+      error = true;
+    } else {
+      this.setState({ lastNameError: false });
+    }
+    if (phoneNumber.length < 10 || phoneNumber.match(/^[0-9]*$/) === null) {
+      this.setState({ phoneNumberError: true });
+      error = true;
+    } else {
+      this.setState({ phoneNumberError: false });
+    }
+    if (
+      !password ||
+      password !== passwordConfirm ||
+      password.match(passwordRegex) === null
+    ) {
+      this.setState({ passwordError: true });
+      error = true;
+    } else {
+      this.setState({ passwordError: false });
+    }
+    if (
+      !passwordConfirm ||
+      password !== passwordConfirm ||
+      passwordConfirm.match(passwordRegex) === null
+    ) {
+      this.setState({ passwordConfirmError: true });
+      error = true;
+      if (error) {
+        return null;
+      }
+    } else {
+      this.setState({ passwordConfirmError: false });
+      if (error) {
+        return null;
+      }
+    }
+    console.log("everything looks good!");
+    AlertIOS.alert("Account Created!", "Click Here To Go Back!", [
+      { text: "OK", onPress: () => this.props.navigation.goBack() }
+    ]);
+  };
   render() {
     let {
       userNameError,
@@ -21,7 +114,14 @@ class SignUp extends Component {
       emailError,
       phoneNumberError,
       passwordError,
-      passwordConfirmError
+      passwordConfirmError,
+      userName,
+      email,
+      firstName,
+      lastName,
+      phoneNumber,
+      password,
+      passwordConfirm
     } = this.state;
     return (
       <View
@@ -36,8 +136,12 @@ class SignUp extends Component {
             User Name
           </FormLabel>
           <FormInput
+            keyboardType="name-phone-pad"
+            autoCapitalize="none"
+            returnKeyType="done"
+            value={userName}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ userName: text });
             }}
             placeholder="User Name..."
             shake={userNameError}
@@ -47,8 +151,11 @@ class SignUp extends Component {
             First Name
           </FormLabel>
           <FormInput
+            keyboardType="name-phone-pad"
+            returnKeyType="done"
+            value={firstName}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ firstName: text });
             }}
             placeholder="First Name..."
             shake={firstNameError}
@@ -60,8 +167,11 @@ class SignUp extends Component {
             Last Name
           </FormLabel>
           <FormInput
+            keyboardType="name-phone-pad"
+            returnKeyType="done"
+            value={lastName}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ lastName: text });
             }}
             placeholder="Last Name..."
             shake={lastNameError}
@@ -71,8 +181,12 @@ class SignUp extends Component {
             Email
           </FormLabel>
           <FormInput
+            autoCapitalize="none"
+            returnKeyType="done"
+            keyboardType="email-address"
+            value={email}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ email: text });
             }}
             placeholder="Email..."
             shake={emailError}
@@ -82,8 +196,11 @@ class SignUp extends Component {
             Phone Number
           </FormLabel>
           <FormInput
+            returnKeyType="done"
+            keyboardType="phone-pad"
+            value={phoneNumber}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ phoneNumber: text });
             }}
             placeholder="Phone Number..."
             shake={phoneNumberError}
@@ -95,8 +212,13 @@ class SignUp extends Component {
             Password
           </FormLabel>
           <FormInput
+            keyboardType="name-phone-pad"
+            autoCapitalize="none"
+            returnKeyType="done"
+            secureTextEntry={true}
+            value={password}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ password: text });
             }}
             placeholder="Password..."
             shake={passwordError}
@@ -108,8 +230,13 @@ class SignUp extends Component {
             Confirm Password
           </FormLabel>
           <FormInput
+            keyboardType="name-phone-pad"
+            autoCapitalize="none"
+            returnKeyType="done"
+            secureTextEntry={true}
+            value={passwordConfirm}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ passwordConfirm: text });
             }}
             placeholder="Confirm Password..."
             shake={passwordConfirmError}
@@ -117,7 +244,11 @@ class SignUp extends Component {
               passwordConfirmError ? { borderBottomColor: "red" } : null
             }
           />
-          <Button style={{ marginTop: 18 }} title="Sign Up" />
+          <Button
+            style={{ marginTop: 18 }}
+            title="Sign Up"
+            onPress={this.handleSignUp}
+          />
         </Card>
       </View>
     );

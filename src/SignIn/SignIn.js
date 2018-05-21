@@ -6,15 +6,44 @@ import {
   Button,
   FormValidationMessage
 } from "react-native-elements";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { connect } from "react-redux";
+
+const userNameRegex = new RegExp("^[a-zA-Z0-9_-]{3,15}$");
+
+const passwordRegex = new RegExp(
+  "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+);
 
 class SignIn extends Component {
   state = {
+    userName: "",
+    password: "",
     userNameError: false,
     passwordError: false
   };
-  handleSignIn = () => {};
+  handleSignIn = () => {
+    let { userName, password } = this.state;
+    if (!userName || userName.match(userNameRegex) === null) {
+      this.setState({ userNameError: true });
+    } else {
+      this.setState({ userNameError: false });
+    }
+    if (!password || password.match(passwordRegex) === null) {
+      this.setState({ passwordError: true });
+    } else {
+      this.setState({ passwordError: false });
+    }
+  };
+  handleTransition = () => {
+    this.setState({
+      userName: "",
+      password: "",
+      passwordError: false,
+      userNameError: false
+    });
+    this.props.navigation.navigate("SignUp");
+  };
   render() {
     console.log(this.props);
     return (
@@ -25,6 +54,15 @@ class SignIn extends Component {
           backgroundColor: "whitesmoke"
         }}
       >
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <Text style={{ fontSize: 30, fontWeight: "600" }}>Safe Route</Text>
+        </View>
         <Card title="Sign In">
           <FormLabel
             labelStyle={this.state.userNameError ? { color: "red" } : null}
@@ -32,9 +70,12 @@ class SignIn extends Component {
             User Name
           </FormLabel>
           <FormInput
-            // clearTextOnFocus={true}
+            autoCapitalize="none"
+            returnKeyType="done"
+            keyboardType="name-phone-pad"
+            value={this.state.userName}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ userName: text });
             }}
             placeholder="User Name..."
             shake={this.state.userNameError}
@@ -48,8 +89,13 @@ class SignIn extends Component {
             Password
           </FormLabel>
           <FormInput
+            keyboardType="name-phone-pad"
+            autoCapitalize="none"
+            returnKeyType="done"
+            value={this.state.password}
+            secureTextEntry={true}
             onChangeText={text => {
-              console.log(text);
+              this.setState({ password: text });
             }}
             placeholder="Password..."
             shake={this.state.passwordError}
@@ -65,14 +111,17 @@ class SignIn extends Component {
               height: 120
             }}
           >
-            <Button style={{ width: 150 }} raised title="Sign In" />
+            <Button
+              style={{ width: 150 }}
+              raised
+              title="Sign In"
+              onPress={this.handleSignIn}
+            />
             <Button
               style={{ width: 150 }}
               raised
               title="Sign Up"
-              onPress={() => {
-                this.props.navigation.navigate("SignUp");
-              }}
+              onPress={this.handleTransition}
             />
           </View>
         </Card>

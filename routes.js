@@ -43,7 +43,6 @@ export const SignedIn = createBottomTabNavigator(
       screen: Profile,
       navigationOptions: {
         tabBarLabel: "Profile"
-        // tabBarIcon:
       }
     },
     Alert: {
@@ -60,6 +59,9 @@ export const SignedIn = createBottomTabNavigator(
         // tabBarIcon:
       }
     }
+  },
+  {
+    initialRouteName: "Alert"
   },
   {
     tabBarOptions: {

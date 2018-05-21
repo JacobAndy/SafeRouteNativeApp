@@ -7,7 +7,7 @@ import store from "./store";
 
 class App extends Component {
   state = {
-    signedIn: false
+    signedIn: !false
   };
 
   render() {
