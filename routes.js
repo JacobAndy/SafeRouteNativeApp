@@ -72,7 +72,7 @@ export const SignedIn = createBottomTabNavigator(
   }
 );
 
-export const createRootNavigator = (signedIn = false) => {
+export const createRootNavigator = (getVal = false) => {
   return createSwitchNavigator(
     {
       SignedIn: {
@@ -84,7 +84,7 @@ export const createRootNavigator = (signedIn = false) => {
     },
     {
       //if user is signed in the initial Route will be SignedIn, otherwise the initial route is SignedOut
-      initialRouteName: signedIn ? "SignedIn" : "SignedOut"
+      initialRouteName: getVal ? "SignedIn" : "SignedOut"
     }
   );
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 const initialState = {
-  user: [],
+  user: "",
   loading: false,
   userLat: null,
   userLong: null
