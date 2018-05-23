@@ -16,9 +16,9 @@ export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_USER_LOCATION:
       return {
-        ...state,
-        userLat: action.payload.lat,
-        userLong: action.payload.long
+        ...state
+        // userLat: action.payload.lat
+        // userLong: action.payload.long
       };
 
     case `${CREATE_USER}_PENDING`:
@@ -70,7 +70,7 @@ export function userSignIn(userName, password) {
 }
 
 export function updateUserLocation(lat, long) {
-  console.log(lat, long);
+  console.log("UPDATE USERS LOCATION HIT");
   return {
     type: UPDATE_USER_LOCATION,
     payload: { lat, long }

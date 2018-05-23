@@ -16,22 +16,22 @@ class Alert extends Component {
     //       position.coords.longitude
     //     );
     //   },
-    //   err => alert(err),
-    //   { timeout: 60000, enableHighAccuracy: true, maximumAge: 60000 }
+    //   err => console.log(err),
+    //   { timeout: 5000, enableHighAccuracy: true, maximumAge: 0 }
     // );
-    // var id = navigator.geolocation.watchPosition(
-    //   pos => {
-    //     console.log(pos.coords.latitude, pos.coords.longitude);
-    //     this.props.updateUserLocation(
-    //       pos.coords.latitude,
-    //       pos.coords.longitude
-    //     );
-    //   },
-    //   err => {
-    //     console.log(`ERROR IN WATCHING POSITION: ${err}`);
-    //   },
-    //   { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-    // );
+    //   var id = navigator.geolocation.watchPosition(
+    //     pos => {
+    //       console.log(pos.coords.latitude, pos.coords.longitude);
+    //       this.props.updateUserLocation(
+    //         pos.coords.latitude,
+    //         pos.coords.longitude
+    //       );
+    //     },
+    //     err => {
+    //       console.log(`ERROR IN WATCHING POSITION: ${err}`);
+    //     },
+    //     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    //   );
   }
   // componentWillUnmount() {
   //   navigator.geolocation.clearWatch(id);

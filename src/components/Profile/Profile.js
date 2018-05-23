@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { connect } from "react-redux";
 import { updateUserLocation } from "../../Ducks/userReducer";
+import _ from "lodash.map";
 
 class Profile extends Component {
   state = {};
@@ -34,6 +35,14 @@ class Profile extends Component {
   //   navigator.geolocation.clearWatch(id);
   // }
   render() {
+    let {
+      first_name,
+      last_name,
+      user_name,
+      phone_number,
+      user_email
+    } = this.props.userReducer.user;
+
     return (
       <View
         style={{
@@ -44,7 +53,7 @@ class Profile extends Component {
         }}
       >
         <Text style={{ top: 115, color: "white", fontSize: 25 }}>
-          User Name
+          {user_name}
         </Text>
         <View
           style={{
@@ -59,22 +68,25 @@ class Profile extends Component {
             paddingTop: 25
           }}
         >
-          <Text style={{ color: "white", fontSize: 20 }}>Full Name</Text>
-          <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
-            Email
+          <Text style={{ color: "white", fontSize: 20 }}>
+            {first_name} {last_name}
           </Text>
           <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
-            Phone Number
+            Test
+            {user_email}
           </Text>
           <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
-            Profile
+            {phone_number}
           </Text>
-          <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
-            Profile
-          </Text>
-          <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
-            Profile
-          </Text>
+          {/* <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
+          Profile
+        </Text>
+        <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
+          Profile
+        </Text>
+        <Text style={{ marginTop: 40, color: "white", fontSize: 20 }}>
+          Profile
+        </Text> */}
         </View>
       </View>
     );
