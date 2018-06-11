@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, FormLabel, FormInput, Button } from "react-native-elements";
-import { View, AlertIOS } from "react-native";
+import { View, AlertIOS, Vibration } from "react-native";
 import { connect } from "react-redux";
 import { createUser } from "../../Ducks/userReducer";
 
@@ -94,11 +94,13 @@ class SignUp extends Component {
       this.setState({ passwordConfirmError: true });
       error = true;
       if (error) {
+        Vibration.vibrate(500);
         return null;
       }
     } else {
       this.setState({ passwordConfirmError: false });
       if (error) {
+        Vibration.vibrate(500);
         return null;
       }
     }
@@ -263,4 +265,7 @@ class SignUp extends Component {
   }
 }
 let mapStateToProps = state => state;
-export default connect(mapStateToProps, { createUser })(SignUp);
+export default connect(
+  mapStateToProps,
+  { createUser }
+)(SignUp);

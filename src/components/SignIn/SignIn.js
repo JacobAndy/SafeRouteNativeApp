@@ -6,7 +6,7 @@ import {
   Button,
   FormValidationMessage
 } from "react-native-elements";
-import { View, Text } from "react-native";
+import { View, Text, Vibration } from "react-native";
 import { connect } from "react-redux";
 import { userSignIn } from "../../Ducks/userReducer";
 
@@ -37,11 +37,13 @@ class SignIn extends Component {
       this.setState({ passwordError: true });
       error = true;
       if (error) {
+        Vibration.vibrate(500);
         return null;
       }
     } else {
       this.setState({ passwordError: false });
       if (error) {
+        Vibration.vibrate(500);
         return null;
       }
     }
@@ -143,6 +145,9 @@ class SignIn extends Component {
   }
 }
 let mapStateToProps = state => state;
-export default connect(mapStateToProps, { userSignIn })(SignIn);
+export default connect(
+  mapStateToProps,
+  { userSignIn }
+)(SignIn);
 
 // aA!12345678
